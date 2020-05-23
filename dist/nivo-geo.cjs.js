@@ -43,7 +43,9 @@ var useGeoMap = function useGeoMap(_ref) {
       borderWidth = _ref.borderWidth,
       borderColor = _ref.borderColor;
   var projection = React.useMemo(function () {
-    return projectionById[projectionType]().scale(projectionScale).translate([width * projectionTranslation[0], height * projectionTranslation[1]]).rotate(projectionRotation);
+    var proj = projectionById[projectionType]().scale(projectionScale).translate([width * projectionTranslation[0], height * projectionTranslation[1]]);
+    if (projectionType !== "albersUsa") proj = proj.rotate(projectionRotation);
+    return proj;
   }, [width, height, projectionType, projectionScale, projectionTranslation[0], projectionTranslation[1], projectionRotation[0], projectionRotation[1], projectionRotation[2]]);
   var path = React.useMemo(function () {
     return d3Geo.geoPath(projection);
